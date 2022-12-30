@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <title>Alumni</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"> </script> 
+        <style>
+            body{
+              background-color: #192329;
+            }
+           
+            th,tr{
+                border: solid black;
+                text-align: center;
+                padding: 10px;
+               
+            }
+           
+            tr:hover{
+                background-color: rgb(236, 223, 223);
+            }
+            h1{
+                background-color:#559c95 ;
+                border-radius: 3px;
+                padding: 7px;
+                color: black;
+                text-align: center;
+            }
+            a{
+                color: black;
+                text-decoration: none;
+                font-size: larger;
+                background-color: #559c95;
+                padding: 5px;
+                border-radius: 3px;
+                align-items: center;
+            }
+            a:hover{
+                color: black;
+            }
+            img{
+                height: 22px;
+                width: 22px;
+                align-self: center;
+            }
+            
+           
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <br>
+            <h1 > Alumni Management System </h1>
+            <br>
+            <% if(action == 'add') { %>
+
+
+
+                <div class="card">
+                    <div class="card-header"><h3>Add New Alumni</h3></div>
+                    <div class="card-body">
+                        <form method="POST" action="/show_alumni/add_show_alumni">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>PRN</label>
+                                        <input type="number" name="prn"  id="prn" class="form-control" Required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Name</label>
+                                        <input type="text" name="name" id="name" class="form-control" Required/>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Course ID</label>
+                                        <!---<input type="number" name="cr_id"  id="cr_id" class="form-control" Required/>-->
+                                        <select name="cr_id"  id="cr_id" class="form-control" Required>
+                                            <%
+                                            if(show_alumni.length > 0)
+                                            {
+                                                show_alumni.forEach(function(data1){
+                                            %>
+                                        
+                                                <option value="<%= data1.course_id %>"><%= data1.course_id +" "+ data1.course_name %></option>
+                        
+                                            <%
+                                                });
+                                            }
+                                        
+                                            %>
+                                    </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>College ID</label>
+                                       <!-- <input type="number" name="c_id"  id="c_id" class="form-control" Required/>-->
+                                       <select name="cr_id"  id="cr_id" class="form-control" Required>
+                                        <%
+                                        if(show_alumni2.length > 0)
+                                        {
+                                            show_alumni2.forEach(function(data2){
+                                        %>
+                                    
+                                            <option value="<%= data2.college_id %>"><%= data2.college_id +" "+data2.college_name %></option>
+                    
+                                        <%
+                                            });
+                                        }
+                                    
+                                        %>
+                                </select>
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Email</label>
+                                        <input type="email" name="eml"  id="eml" class="form-control" Required/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Current Company</label>
+                                        <input type="text" name="cmpny" id="cmpny" class="form-control" Required/>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>City</label>
+                                        <input type="text" name="city"  id="city" class="form-control" Required/>
+                                    </div>
+                                </div>
+                               
+                            </div>
+
+                            <div class="mb-3">
+                                <input type="submit" id="submit" name="submit_button" class="btn btn-primary" value="Add" Required/>
+                                <a type="button" class="btn btn-secondary" href="/index">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <script> $(document).ready(function() { $("#submit").click(function() 
+                    { 
+                        if($("#name").val()!="" & $("#city").val()!="" & $("#prn").val()!="")
+                        {alert($("#name").val() + " added Successfully !");}
+                         }); }); 
+                    </script>
+
+
+
+
+
+        <% } else if(action == 'edit') { %>
+            <div class="card">
+                <div class="card-header"><h3>Edit Alumni Details</h3></div>
+                <div class="card-body">
+                   <form method="POST" action="/show_alumni/edit/<%= show_alumni.PRN %>">
+                        <div class="row">
+                           
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>Name</label>
+                                    <input type="text" name="name" id="name" class="form-control" value="<%= show_alumni.name %>" Required/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>City</label>
+                                    <input type="text" name="city"  id="city" class="form-control" value="<%= show_alumni.city %>" Required/>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>Course ID</label>
+                                    <input type="number" name="cr_id"  id="cr_id" class="form-control" value="<%= show_alumni.course_id %>" Required/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>College ID</label>
+                                    <input type="number" name="c_id"  id="c_id" class="form-control" value="<%= show_alumni.college_id %>" Required/>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>Email</label>
+                                    <input type="email" name="eml"  id="eml" class="form-control" value="<%= show_alumni.email %>" Required/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>Current Company</label>
+                                    <input type="text" name="cmpny" id="cmpny" class="form-control" value="<%= show_alumni.current_company %>" Required/>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="mb-3">
+                            <input type="submit" id="submit" name="submit_button" class="btn btn-primary" value="Edit" />
+                            <a type="button" class="btn btn-secondary" href="/show_alumni">Cancel</a>
+
+                        </div>
+                    </form>
+
+                    <script> $(document).ready(function() { $("#submit").click(function() 
+                        { 
+                            alert($("#name").val() + " Updated Successfully !");
+                             }); }); 
+                        </script>
+                   
+                </div>
+            </div>
+
+
+
+
+                
+            <% } else { %>
+
+                
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col" ><h3>Alumni Information</h3></div>
+                        <div class="col">
+                            <a href="/show_alumni/add" class="btn btn-success btn-sm float-end">Add</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>PRN</th>
+                                <th>Name</th>
+                                <th>College ID</th>
+                                <th>Course ID</th>
+				                <th>Email</th>
+				                <th>Current Company</th>
+				                <th>City</th>
+                                <th>
+                                    Options
+                                </th>
+                            </tr>
+                            <%
+                            if(show_alumni.length > 0)
+                            {
+                                show_alumni.forEach(function(data){
+                            %>
+                            <tr>
+                                <td><%= data.PRN %></td>
+                                <td><%= data.name %></td>
+                                <td><%= data.college_id %></td>
+                                <td><%= data.course_id %></td>
+                                <td><%= data.email %></td>
+				                <td><%= data.current_company %></td>
+				                <td><%= data.city %></td>
+                                <th>
+                                    <a href="/show_alumni/edit/<%= data.PRN %>" class="btn btn-primary btn-sm">Edit</a>
+                                    <a id="del" href="/show_alumni/del/<%= data.PRN %>" class="btn btn-primary btn-sm">Delete</a>
+                                </th>
+                            </tr>
+                            <%
+                                });
+                            }
+                            else
+                            {
+                            %>
+                            <tr>
+                                <td colspan="8">No Data Found</td>
+                            </tr>
+                            <%
+                            }
+                            %>
+                        </table>
+                        
+
+
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            
+            <a href="index">
+                <img src="https://dsm01pap006files.storage.live.com/y4mUInI66qdAZE3tFk-IQlyKtRX1BsxIfH1BntLKwtlYMpX_4txVRiMt6kH0DoUm695WCYQVOfTaEQ6WK-aXJfc-QtrQN4d3-5v_jKFfDJContNuKgsgcbzZw51LQaSvEzZSqqCIE-dUOWw1MIsD1JiXJqItrqkEh7BVZs9N9ApF4d_ZruKYZnLS14XZQCmIKG_?width=64&height=64&cropmode=none">
+                 Home
+                </a>
+
+            <% } %>
+
+        </div> 
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </body>
+</html>
