@@ -10,6 +10,7 @@
 
         <title>Alumni</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"> </script> 
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <style>
             body{
               background-color: #192329;
@@ -95,7 +96,7 @@
                                                 show_alumni.forEach(function(data1){
                                             %>
                                         
-                                                <option value="<%= data1.course_id %>"><%= data1.course_id +" "+ data1.course_name %></option>
+                                                <option value="<%= data1.course_id %>"> <%= data1.course_id +" "+ data1.course_name %></option>
                         
                                             <%
                                                 });
@@ -110,7 +111,7 @@
                                     <div class="mb-3">
                                         <label>College ID</label>
                                        <!-- <input type="number" name="c_id"  id="c_id" class="form-control" Required/>-->
-                                       <select name="cr_id"  id="cr_id" class="form-control" Required>
+                                       <select name="c_id"  id="c_id" class="form-control" Required>
                                         <%
                                         if(show_alumni2.length > 0)
                                         {
@@ -167,11 +168,20 @@
                     </div>
                 </div>
 
-                <script> $(document).ready(function() { $("#submit").click(function() 
+                <!---<script> $(document).ready(function() { $("#submit").click(function() 
                     { 
                         if($("#name").val()!="" & $("#city").val()!="" & $("#prn").val()!="")
                         {alert($("#name").val() + " added Successfully !");}
                          }); }); 
+                </script>-->
+                <script> $(document).ready(function() { $("#submit").click(function() 
+                    { 
+                        //alert($("#name").val() + " Updated Successfully !");
+                        swal("Added Successfully !", $("#name").val() + " Added !", "success").then(function() {
+                        window.location = "/show_alumni";
+                            });;
+
+                    }); }); 
                     </script>
 
 
@@ -246,8 +256,12 @@
 
                     <script> $(document).ready(function() { $("#submit").click(function() 
                         { 
-                            alert($("#name").val() + " Updated Successfully !");
-                             }); }); 
+                            //alert($("#name").val() + " Updated Successfully !");
+                            swal("Updated Successfully !", $("#name").val() + "'s details updated !", "success").then(function() {
+                            window.location = "/show_alumni";
+});;
+
+                        }); }); 
                         </script>
                    
                 </div>
@@ -300,6 +314,8 @@
                                 <th>
                                     <a href="/show_alumni/edit/<%= data.PRN %>" class="btn btn-primary btn-sm">Edit</a>
                                     <a id="del" href="/show_alumni/del/<%= data.PRN %>" class="btn btn-primary btn-sm">Delete</a>
+
+
                                 </th>
                             </tr>
                             <%
@@ -315,6 +331,7 @@
                             }
                             %>
                         </table>
+
                         
 
 

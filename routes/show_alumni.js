@@ -64,11 +64,14 @@ router.post("/add_show_alumni", function(request, response, next){
 
 	var city = request.body.city;
 
+	console.log(c_id);
+	console.log(cr_id);
+
 	
 
 	var query = `
 	INSERT INTO alumni_db
-	VALUES ("${prn}", "${name}", "${c_id}","${cr_id}","${eml}","${cmpny}","${city}")
+	VALUES ("${prn}", "${name}", "${c_id}","${cr_id}", "${eml}", "${cmpny}", "${city}")
 	`;
 
 	database.query(query, function(error, data){
@@ -80,7 +83,7 @@ router.post("/add_show_alumni", function(request, response, next){
 		}	
 		else
 		{
-			response.redirect("/show_alumni");
+			//response.redirect("/show_alumni");
 		}
 
 	});
@@ -141,7 +144,7 @@ router.post('/edit/:PRN', function(request, response, next){
 		}
 		else
 		{
-			response.redirect('/show_alumni');
+			//response.redirect('/show_alumni');
 		}
 
 	});
